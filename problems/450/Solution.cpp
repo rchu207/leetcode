@@ -45,10 +45,18 @@ private:
             return root;
         }
         
-        TreeNode* replacement = nullptr;
-        
         if (iter->left == nullptr || iter->right == nullptr) {
-            replacement = (iter->left) ? iter->left : iter->right;
+            auto replacement = (iter->left) ? iter->left : iter->right;
+            if (parent == nullptr) {
+                delete iter;
+                return replacement;
+            }
+            if (parent->left == iter) {
+                parent->left = replacement;
+            } else {
+                parent->right = replacement;
+            }
+            delete iter;
         } else {
             auto successorParent = iter;
             auto successor = iter->right;
@@ -65,20 +73,8 @@ private:
                 successorParent->right = successor->right;;
             }
             delete successor;
-            return root;
         }
-        
-        if (parent == nullptr) {
-            delete iter;
-            return replacement;
-        }
-        if (parent->left == iter) {
-            parent->left = replacement;
-        } else {
-            parent->right = replacement;
-        }
-        
-        delete iter;
+
         return root;
     }
     

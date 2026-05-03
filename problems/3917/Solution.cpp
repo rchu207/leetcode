@@ -3,14 +3,14 @@ public:
     vector<int> countOppositeParity(vector<int>& nums) {
         int n = nums.size();
         vector<int> answer(n);
-        for (int i = 0; i < n - 1; i++) {
-            auto parity = (nums[i] + 1) % 2;
-            auto count = 0;
-            for (int j = i + 1; j < n; j++) {
-                if (nums[j] % 2 == parity)
-                    count++;
-            }
-            answer[i] = count;
+        int odd = 0;
+        int even = 0;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i + 1] % 2 == 0)
+                even++;
+            else
+                odd++;
+            answer[i] = (nums[i] % 2 == 0) ? odd : even;
         }
         return answer;
     }

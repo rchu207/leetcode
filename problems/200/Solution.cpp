@@ -51,4 +51,36 @@ private:
             }
         }
     }
+
+        void dfs(vector<vector<char>>& grid, int row, int col) {
+        int m = grid.size();
+        int n = grid[0].size();
+        stack<pair<int, int>> s;
+        s.push(std::make_pair(row, col));
+        while (!s.empty()) {
+            auto pos = s.top();
+            s.pop();
+
+            if (grid[pos.first][pos.second] == '0')
+                continue;
+            grid[pos.first][pos.second] = '0';
+
+            auto up = pos.first - 1;
+            if (up >= 0) {
+                s.push(std::make_pair(up, pos.second));
+            }
+            auto down = pos.first + 1;
+            if (down < m) {
+                s.push(std::make_pair(down, pos.second));
+            }
+            auto left = pos.second - 1;
+            if (left >= 0) {
+                s.push(std::make_pair(pos.first, left));
+            }                
+            auto right = pos.second + 1;
+            if (right < n) {
+                s.push(std::make_pair(pos.first, right));
+            }
+        }
+    }
 };
